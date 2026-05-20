@@ -6,7 +6,7 @@ class Email:
     def criar_email(self,email_novo,senha_nova):
         if self.__gmail and self.__senha is not None:
             raise ValueError("Dados ja presentes, ERRO!")
-        if len(email_novo) < 6 and len(senha_nova) < 6:
+        if len(email_novo) < 6 or len(senha_nova) < 6:
             raise ValueError("minimo de 6 caracteres")
         sinais = "!@#?"
         if not any(caractere in sinais for caractere in senha_nova):
