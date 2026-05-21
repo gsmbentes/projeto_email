@@ -3,8 +3,10 @@ class Email:
         self._titular = titular
         self.__senha = None
         self.__gmail = None
+        self.nome_site = None
+        self.__historico = []
     def criar_email(self,email_novo,senha_nova):
-        if self.__gmail and self.__senha is not None:
+        if self.__gmail is not None and self.__senha is not None:
             raise ValueError("Dados ja presentes, ERRO!")
         if len(email_novo) < 6 or len(senha_nova) < 6:
             raise ValueError("minimo de 6 caracteres")
@@ -21,6 +23,7 @@ class Email:
             raise ValueError("O e-mail deve ser um endereço @gmail.com válido")
         self.__gmail = email_novo
         self.__senha = senha_nova
+        self.__historico.append("Criação de conta e e-mail")
         print(f"Conta para {self._titular} criada com sucesso!")
     def _autenticar_email(self,email_tenta,senha_tenta):
         if email_tenta != self.__gmail :
@@ -40,11 +43,23 @@ class Email:
     def entrar_site(self,gmail_tenta,senha_tenta,nome_site):
         self._autenticar_email(gmail_tenta,senha_tenta)
         self.validar_site(nome_site)
+        self.nome_site = nome_site
+        self.__historico.append(f"acesso ao Site : {nome_site}")
         print(f"entrando no site {nome_site}... ")
+    def nome_site_validar(self,nome_site):
+        if self.nome_site is None :
+            raise PermissionError("erro site sem nome")
+        if nome_site != self.nome_site: 
+            raise ValueError(f"site não identificado , usuário está presente neste site {self.nome_site}")
+        else:
+            self.nome_site = nome_site
     def saindo_site(self,gmail_tenta,senha_tenta,nome_site):
         self._autenticar_email(gmail_tenta,senha_tenta)
         self.validar_site(nome_site)
+        self.nome_site_validar(nome_site)
+        self.__historico.append(f"saída do Site : {nome_site}")
         print(f"saindo do site {nome_site}")
+        self.nome_site = None
     def redefinir_senha(self, senha_antiga, senha_nova):
         if self.__senha != senha_antiga:
             raise ValueError("A senha atual está incorreta. Não é possível redefinir.")
@@ -64,5 +79,21 @@ class Email:
             raise ValueError("A nova senha deve conter letras e (números ou sinais !@#?).")
 
         self.__senha = senha_nova
+        self.__historico.append("Redefinição de senha")
         print("Senha redefinida com sucesso!")
-    
+    def _validar_senha(self,senha_tenta):
+        if senha_tenta != self.__senha:
+            raise PermissionError("erro senha esta errada, acesso negado")
+        else:
+            return True
+    def exibir_historico(self,senha_tenta):
+        self._validar_senha(senha_tenta)
+        print(f"Histórico de navegação de {self._titular}")
+        if not  self.__historico :
+            print("Zero atividades")
+            return
+        for i, atividade in enumerate(self.__historico, 1):
+            print(f"{i}. {atividade}")
+
+        print(f"\nTotal de atividades realizadas: {len(self.__historico)}")
+        print("-"*45)
