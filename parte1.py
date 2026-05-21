@@ -29,11 +29,21 @@ class Email:
             raise PermissionError("Erro, senha incorreta!!")
         else:
             return True
+    def validar_site(self, site):
+        site_formatado = site.strip().lower()
+        if not site_formatado.startswith("www."):
+            raise ValueError(f"Site '{site}' inválido: deve começar com 'www.'")s
+        if not site_formatado.endswith(".com.br"):
+            raise ValueError(f"Site '{site}' inválido: deve terminar em '.com.br'")
+
+        return True
     def entrar_site(self,gmail_tenta,senha_tenta,nome_site):
         self._autenticar_email(gmail_tenta,senha_tenta)
+        self.validar_site(nome_site)
         print(f"entrando no site {nome_site}... ")
     def saindo_site(self,gmail_tenta,senha_tenta,nome_site):
         self._autenticar_email(gmail_tenta,senha_tenta)
+        self.validar_site(nome_site)
         print(f"saindo do site {nome_site}")
     def redefinir_senha(self, senha_antiga, senha_nova):
         if self.__senha != senha_antiga:
