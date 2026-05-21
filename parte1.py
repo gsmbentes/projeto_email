@@ -32,7 +32,7 @@ class Email:
     def validar_site(self, site):
         site_formatado = site.strip().lower()
         if not site_formatado.startswith("www."):
-            raise ValueError(f"Site '{site}' inválido: deve começar com 'www.'")s
+            raise ValueError(f"Site '{site}' inválido: deve começar com 'www.'")
         if not site_formatado.endswith(".com.br"):
             raise ValueError(f"Site '{site}' inválido: deve terminar em '.com.br'")
 
