@@ -19,11 +19,8 @@ Este projeto simula um sistema de criação de e-mails e autenticação em sites
 - **Lógica de Strings:** Manipulação e validação avançada de textos (Strings).
 
 ## 📂 Estrutura do Projeto
-
+      
 - `parte1.py`: Contém a classe `Email` com toda a lógica de negócio e validações.
 - `main.py`: Script de execução que gerencia a interface com o usuário e o fluxo de dados.
 
 
-2. Clone este repositório:
-   ```bash
-   git clone [https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git](https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git)
